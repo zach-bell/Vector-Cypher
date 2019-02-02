@@ -9,4 +9,6 @@ public class InputHandler {
 	public static String takeStringInput() {
 		return scan.nextLine();
 	}
+	
+	
 }
