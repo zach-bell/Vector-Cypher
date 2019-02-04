@@ -113,7 +113,7 @@ public class CipherWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CP.println("\tEncript button clicked");
 				updateKey();
-				encriptedTextArea.setText(CaesarCypher.encrypt(plainTextArea.getText(), key));
+				encriptedTextArea.setText(CaesarCypher.encryptAscii(plainTextArea.getText(), key));
 			}
 		});
 		panelGridAdd(plainTextAreaPanel, encriptButton, 0, 2);
@@ -124,7 +124,7 @@ public class CipherWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CP.println("\tDecript button clicked");
 				updateKey();
-				plainTextArea.setText(CaesarCypher.decrypt(encriptedTextArea.getText(), key));
+				plainTextArea.setText(CaesarCypher.decryptAscii(encriptedTextArea.getText(), key));
 			}
 		});
 		panelGridAdd(encriptedTextAreaPanel, decriptButton, 0, 2);

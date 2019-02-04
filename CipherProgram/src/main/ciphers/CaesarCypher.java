@@ -14,7 +14,7 @@ public class CaesarCypher {
 	 * @param key number of times to shift the text.
 	 * @return A string that has been encrypted by shifting with the int key.
 	 */
-	public static String encrypt(String input, int key) {
+	public static String encryptAscii(String input, int key) {
 		String sender = "";
 		for (char c : Manipulator.numbersToChar(Manipulator.shiftNumbersNoSpace(
 				Manipulator.charArrayToNumbers(Manipulator.stringToCharArray(input)),key))) {
@@ -33,7 +33,7 @@ public class CaesarCypher {
 	 * @param key number of times to shift the text.
 	 * @return A string that has been decrypt by shifting with the int key.
 	 */
-	public static String decrypt(String input, int key) {
+	public static String decryptAscii(String input, int key) {
 		String sender = "";
 		for (char c : Manipulator.numbersToChar(Manipulator.shiftNumbersNoSpace(
 				Manipulator.charArrayToNumbers(Manipulator.stringToCharArray(input)),-key))) {
@@ -41,5 +41,12 @@ public class CaesarCypher {
 		}
 		return sender;
 	}
-
+	
+	public static String encryptTraditional(String input, int key) {
+		
+	}
+	
+	public static String decryptTraditional(String input, int key) {
+		
+	}
 }
