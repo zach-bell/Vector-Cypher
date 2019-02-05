@@ -16,7 +16,7 @@ public class CaesarCypher {
 	 */
 	public static String encryptAscii(String input, int key) {
 		String sender = "";
-		for (char c : Manipulator.numbersToChar(Manipulator.shiftNumbersNoSpace(
+		for (char c : Manipulator.numbersToChar(Manipulator.shiftNumbersWithSpace(
 				Manipulator.charArrayToNumbers(Manipulator.stringToCharArray(input)),key))) {
 			sender += c;
 		}
@@ -35,7 +35,7 @@ public class CaesarCypher {
 	 */
 	public static String decryptAscii(String input, int key) {
 		String sender = "";
-		for (char c : Manipulator.numbersToChar(Manipulator.shiftNumbersNoSpace(
+		for (char c : Manipulator.numbersToChar(Manipulator.shiftNumbersWithSpace(
 				Manipulator.charArrayToNumbers(Manipulator.stringToCharArray(input)),-key))) {
 			sender += c;
 		}
@@ -43,10 +43,10 @@ public class CaesarCypher {
 	}
 	
 	public static String encryptTraditional(String input, int key) {
-		
+		return Manipulator.shiftStringAlpha(input, key);
 	}
 	
 	public static String decryptTraditional(String input, int key) {
-		
+		return Manipulator.shiftStringAlpha(input, -key);
 	}
 }

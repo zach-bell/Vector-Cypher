@@ -23,7 +23,6 @@ public class Manipulator {
 		for (char c : characters) {
 			for (int i = 0; i < alphabetTable.length; i++) {
 				if (c == alphabetTable[i]) {
-					CP.println("" + (Math.floorMod((i + amount), (alphabetTable.length))));
 					sender += alphabetTable[(Math.floorMod((i + amount), (alphabetTable.length)))];
 					break;
 				}
