@@ -71,5 +71,12 @@ public class Manipulator {
 		}
 		return sender;
 	}
-
+	
+	public static String charArrayToString(char[] input) {
+		String sender = "";
+		for (char c : input) {
+			sender += c;
+		}
+		return sender;
+	}
 }

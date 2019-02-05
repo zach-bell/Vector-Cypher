@@ -17,13 +17,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import main.ciphers.CaesarCypher;
+import main.ciphers.VectorBlockCipher;
 import main.tools.CP;
+import main.tools.JTextFieldLimit;
 
 @SuppressWarnings("serial")
 public class CipherWindow extends JFrame {
 	
 	private JPanel mainPanel;
+	private JPanel contentPanel;
 	private JPanel subPanel;
 	private JPanel plainTextAreaPanel;
 	private JPanel encriptedTextAreaPanel;
@@ -48,7 +50,7 @@ public class CipherWindow extends JFrame {
 	private Color lightGreen;
 	private Color buttonColor;
 	private Font font;
-	private int key = 3;
+	private String key;
 	
 	public CipherWindow() {
 		super("Vector Cipher");
@@ -62,6 +64,8 @@ public class CipherWindow extends JFrame {
 		initScrollPanes();
 		initTextAreas();
 		initButtons();
+		
+		key = keyInput.getText();
 		
 		add(mainPanel);
 	}
@@ -93,14 +97,16 @@ public class CipherWindow extends JFrame {
 		encriptedTextArea.setEditable(true);
 		encriptedScrollPane.add(encriptedTextArea);
 		
-		keyInput = new JTextField("3");
-		keyInput.setColumns(2);
-		panelGridAdd(keyPanel, keyInput, 0, 1);
+		keyInput = new JTextField();
+		keyInput.setColumns(32);
+		keyInput.setDocument(new JTextFieldLimit(32));
+		keyInput.setText("A generic 32 byte key goes here!");
+		panelGridAdd(keyPanel, keyInput, 1, 0);
 	}
 	
 	private void updateKey() {
 		try {
-			key = Integer.parseInt(keyInput.getText());
+			key = keyInput.getText();
 		} catch(NumberFormatException e) {
 			CP.println("The user is dumb and didn't put a number.");
 		}
@@ -113,7 +119,7 @@ public class CipherWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CP.println("\tEncript button clicked");
 				updateKey();
-				encriptedTextArea.setText(CaesarCypher.encryptAscii(plainTextArea.getText(), key));
+				encriptedTextArea.setText(VectorBlockCipher.encrypt(plainTextArea.getText(), key));
 			}
 		});
 		panelGridAdd(plainTextAreaPanel, encriptButton, 0, 2);
@@ -124,14 +130,14 @@ public class CipherWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CP.println("\tDecript button clicked");
 				updateKey();
-				plainTextArea.setText(CaesarCypher.decryptAscii(encriptedTextArea.getText(), key));
+				plainTextArea.setText(VectorBlockCipher.decrypt(encriptedTextArea.getText(), key));
 			}
 		});
 		panelGridAdd(encriptedTextAreaPanel, decriptButton, 0, 2);
 	}
 
 	private void initLabels() {
-		titleLabel = new JLabel("Cipher Vector");
+		titleLabel = new JLabel("Vector Cipher");
 		font = titleLabel.getFont();
 		titleLabel.setFont(font.deriveFont(20f));
 		titleLabel.setForeground(Color.LIGHT_GRAY);
@@ -147,7 +153,7 @@ public class CipherWindow extends JFrame {
 		encriptedTextLabel.setFont(font.deriveFont(14f));
 		panelGridAdd(encriptedTextAreaPanel, encriptedTextLabel, 0, 0);
 		
-		keyLabel = new JLabel("Key");
+		keyLabel = new JLabel("32 byte Key");
 		keyLabel.setForeground(Color.DARK_GRAY);
 		keyLabel.setFont(font.deriveFont(14f));
 		panelGridAdd(keyPanel, keyLabel, 0, 0);
@@ -162,6 +168,10 @@ public class CipherWindow extends JFrame {
 		subPanel.setBackground(Color.DARK_GRAY);
 		subPanel.setVisible(true);
 		
+		contentPanel = new JPanel(new GridBagLayout());
+		contentPanel.setBackground(Color.GRAY);
+		contentPanel.setVisible(true);
+		
 		plainTextAreaPanel = new JPanel(new GridBagLayout());
 		plainTextAreaPanel.setBackground(lightBlue);
 		plainTextAreaPanel.setVisible(true);
@@ -174,9 +184,10 @@ public class CipherWindow extends JFrame {
 		keyPanel.setBackground(Color.LIGHT_GRAY);
 		keyPanel.setVisible(true);
 		
-		panelGridAdd(mainPanel, subPanel, 0, 1);
-		panelGridAdd(subPanel, plainTextAreaPanel, 0, 0);
-		panelGridAdd(subPanel, encriptedTextAreaPanel, 2, 0);
+		panelGridAdd(mainPanel, contentPanel, 0, 1);
+		panelGridAdd(mainPanel, subPanel, 0, 2);
+		panelGridAdd(contentPanel, plainTextAreaPanel, 0, 0);
+		panelGridAdd(contentPanel, encriptedTextAreaPanel, 1, 0);
 		panelGridAdd(subPanel, keyPanel, 1, 0);
 	}
 	
