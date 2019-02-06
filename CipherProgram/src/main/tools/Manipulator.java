@@ -13,8 +13,24 @@ public class Manipulator {
 											'a','b','c','d','e','f','g','h','i','j','k','l','m',
 											'n','o','p','q','r','s','t','u','v','w','x','y','z'};
 	
+	public static int[] alphaCount = new int[27];
+	
 	public static int shift(int n, int k) {
 		return ((n + k) % MAXALPHASCII);
+	}
+	
+	public static int[] countLetters(String input){
+		int index = 0;
+		char[] inputArray = input.toCharArray();
+		for (char c : alphabetTable) {
+			for (char e : inputArray) {
+				if (c == e) {
+					alphaCount[index] ++;
+				}
+			}
+			index ++;
+		}
+		return alphaCount;
 	}
 	
 	public static String shiftStringAlpha(String input, int amount) {
